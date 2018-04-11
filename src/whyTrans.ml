@@ -75,7 +75,7 @@ let get_why3_sym th name =
   with Not_found -> why_error dp "Primitive %s cannot be mapped to Why3" name
 
 (* Regular theory *)
-(* let why3_eq = 
+(* let why3_eq =
   WT.ns_find_ls real_theory.WT.th_export ["infix ="]
 
 let why3_leq =
@@ -139,7 +139,7 @@ let why3_float f =
   let (f,i) = modf f                                   in
   let is    = Printf.sprintf "%.0f" i                  in
   let fs    = String.sub (Printf.sprintf "%.3f" f) 2 3 in
-  T.t_const (Why3.Number.ConstReal (Why3.Number.real_const_dec is fs None))
+  T.t_const (Why3.Number.ConstReal (Why3.Number.real_const_dec is fs None)) Ty.ty_real
 
 let why3_fin f =
   T.t_app_infer why3_fromreal [why3_float f]

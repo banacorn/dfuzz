@@ -1,7 +1,7 @@
 # Program main file
 
 # Ocamlbuild
-OCBOPTS=-use-ocamlfind -pkg unix,menhirLib,why3
+OCBOPTS=-use-ocamlfind -pkg unix,why3
 OCAMLBUILD=ocamlbuild $(OCBOPTS)
 
 VERSION=native
@@ -10,7 +10,7 @@ NAME=dfuzz
 # Program main file
 MAIN=src/$(NAME)
 
-.PHONY: $(NAME) clean clean-py $(NAME).byte $(NAME).native $(NAME).d.byte $(NAME).d.native 
+.PHONY: $(NAME) clean clean-py $(NAME).byte $(NAME).native $(NAME).d.byte $(NAME).d.native
 
 all: $(NAME)
 
@@ -39,6 +39,3 @@ clean::
 	$(OCAMLBUILD) -clean
 	rm -f src/parser.conflicts
 	rm -rf $(NAME) $(NAME).* $(NAME).exe TAGS
-
-
-

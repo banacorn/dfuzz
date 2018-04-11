@@ -44,7 +44,7 @@ let map f s =
 
   if l = 0 then s else
     begin
-      let r = String.create l in
+      let r = Bytes.create l in
       for i = 0 to l - 1 do String.unsafe_set r i (f(String.unsafe_get s i)) done;
-      r
+      Bytes.to_string r
     end

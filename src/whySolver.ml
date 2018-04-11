@@ -8,6 +8,7 @@
 
 module WC = WhyCore
 module WT = WhyTrans
+module Driver = Why3.Driver
 
 open Why3
 module CP = Call_provers
@@ -45,7 +46,7 @@ let alt_ergo : Whyconf.config_prover =
 (* loading the Alt-Ergo driver *)
 let alt_ergo_driver : Driver.driver =
   try
-    Driver.load_driver WC.env alt_ergo.Whyconf.driver []
+    Driver.load_driver_absolute WC.env alt_ergo.Whyconf.driver []
   with e ->
     Format.eprintf "Failed to load driver for alt-ergo: %a@."
       Exn_printer.exn_printer e;
@@ -69,8 +70,12 @@ let post cs =
 
   let result : Call_provers.prover_result =
     Call_provers.wait_on_call
-      (Driver.prove_task ~command:alt_ergo.Whyconf.command ~timelimit:60
-  	 alt_ergo_driver task ()) ()                                   in
+      (Driver.prove_task
+          ~command:alt_ergo.Whyconf.command
+          ~limit:{Call_provers.empty_limit with limit_time = 60 }
+  	      alt_ergo_driver
+          task
+      )                                   in
 
   why_info dp "@[alt-ergo answers %a@]@." Call_provers.print_prover_result result;
   match result.CP.pr_answer with
@@ -112,4 +117,3 @@ let send_smt cs =
 (*     Call_provers.print_prover_answer *)
 (*     result2.Call_provers.pr_answer *)
 (*     result2.Call_provers.pr_time *)
-
